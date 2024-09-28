@@ -1,2 +1,2 @@
-import getConnection from './db';
-export default getConnection;
+import db from './db';
+export default db;

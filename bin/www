@@ -13,6 +13,8 @@ const http = require('http');
  * Get port from environment and store in Express.
  */
 
+// 포트 설정
+// 아래 번호를 변경하면 포트 번호가 변경됩니다.
 const port = normalizePort(process.env.PORT || '3333');
 app.set('port', port);
 
