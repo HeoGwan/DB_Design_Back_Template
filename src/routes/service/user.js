@@ -75,3 +75,66 @@ export const postUser = async (req, res) => {
         data
     });
 }
+
+export const signin = async (req, res) => {
+    try {
+        const { id, pw } = req.body;
+
+        const getUserQuery = 'select * from user where id = ?';
+        const [[user]] = await db.query(getUserQuery, [id]);
+
+        if (!user) {
+            throw new Error(`invalid id`);
+        }
+
+        if (user.pw != pw) {
+            throw new Error(`wrong password`);
+        }
+
+        const data = {
+            id: user.id,
+            name: user.name,
+            phone: user.phone,
+        };
+
+        return res.status(200).json({
+            status: 4091,
+            message: 'success',
+            data,
+        });
+    } catch (e) {
+        return res.status(200).json({
+            status: 500,
+            message: 'signin error',
+            data: e,
+        });
+    }
+}
+
+export const signup = async (req, res) => {
+    try {
+        const { id, pw, name, phone } = req.body;
+
+        const getUserQuery = 'select * from user where id = ?';
+        const [[user]] = await db.query(getUserQuery, [id]);
+
+        if (user) {
+            throw new Error(`already has user`);
+        }
+
+        const postUserQuery = 'insert into user(id, pw, name, phone) values(?, ?, ?, ?)';
+        const [data] = await db.query(postUserQuery, [id, pw, name, phone]);
+
+        return res.status(200).json({
+            status: 4091,
+            message: 'success',
+            data,
+        });
+    } catch (e) {
+        return res.status(200).json({
+            status: 500,
+            message: e.message,
+            data: e,
+        });
+    }
+}
