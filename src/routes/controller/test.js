@@ -1,13 +1,26 @@
-// user의 controller 파일
-
 import express from 'express';
-import { getTest } from '../service/test';
-// service의 함수를 가져오기 위한 코드
+import { TestService } from '../service/test';
 // 라우터 설정을 위한 변수
 const router = express.Router();
 
-// 각 메소드에 맞는 함수를 연결시킴
-router.get('/', getTest);
+router.get('/', async (req, res) => {
+    try {
+        const testService = new TestService();
+        const data = await testService.test();
+
+        return res.status(200).json({
+            status: 200,
+            message: 'success',
+            data,
+        });
+    } catch (e) {
+        return res.status(200).json({
+            status: 500,
+            message: 'server error',
+            data: e.message,
+        });
+    }
+});
 
 // 설정된 라우터를 내보갬
 export default router;
