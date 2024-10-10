@@ -1,5 +1,5 @@
 import express from 'express';
-import { TestService } from '../service/test';
+import { TestService } from './test.service';
 // 라우터 설정을 위한 변수
 const router = express.Router();
 

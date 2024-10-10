@@ -2,7 +2,7 @@
 
 import express from 'express';
 // service의 함수를 가져오기 위한 코드
-import { UserService } from '../service/user';
+import { UserService } from './user.service';
 // 라우터 설정을 위한 변수
 const router = express.Router();
 
